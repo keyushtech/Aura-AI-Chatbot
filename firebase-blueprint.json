@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "Memory": {
+      "title": "Memory",
+      "description": "A single extracted user fact or preference registered with Aura",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier of the memory" },
+        "fact": { "type": "string", "description": "The extracted third-person fact about the user" },
+        "category": { "type": "string", "enum": ["personal", "preference", "career", "interest", "other"], "description": "Category of the fact" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Iso-8601 creation timestamp" },
+        "sourceContext": { "type": "string", "description": "The exact user conversation context or message source" },
+        "isActive": { "type": "boolean", "description": "Whether this register node is currently active" },
+        "userId": { "type": "string", "description": "The owner User ID" }
+      },
+      "required": ["id", "fact", "category", "createdAt", "sourceContext", "isActive", "userId"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A customized dialogue stream thread with Aura",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique session identifier" },
+        "title": { "type": "string", "description": "The conversation title banner name" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date-time when thread started" },
+        "userId": { "type": "string", "description": "The owner User ID" },
+        "messages": {
+          "type": "array",
+          "description": "Ordered dialog exchanges",
+          "items": { "type": "object" }
+        }
+      },
+      "required": ["id", "title", "createdAt", "userId", "messages"]
+    }
+  },
+  "firestore": {
+    "/memories/{memoryId}": {
+      "schema": "Memory",
+      "description": "Active and archived user memory banks"
+    },
+    "/sessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Historic chat dialogue threads"
+    }
+  }
+}

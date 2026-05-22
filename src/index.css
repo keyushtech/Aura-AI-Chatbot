@@ -1,0 +1,328 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Google Sans", sans-serif;
+  --font-display: "Google Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer utilities {
+  .glass-heavy {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(28px) saturate(210%);
+    -webkit-backdrop-filter: blur(28px) saturate(210%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 
+      0 4px 30px rgba(0, 0, 0, 0.02),
+      inset 0 1.5px 1.5px rgba(255, 255, 255, 0.8),
+      inset 0 -2px 12px rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-heavy-white {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.04),
+      0 1px 3px rgba(0, 0, 0, 0.01),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(251, 248, 255, 0.6);
+  }
+
+  /* Liquid glass glow & shine shadow */
+  .shadow-liquid-glass {
+    box-shadow: 
+      0 4px 30px rgba(31, 38, 135, 0.01),
+      0 16px 45px rgba(0, 0, 0, 0.02),
+      inset 0 0 0 1.5px rgba(255, 255, 255, 0.7),
+      inset 0 8px 16px -4px rgba(255, 255, 255, 0.5);
+  }
+
+  .shadow-apple-btn {
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.01),
+      0 4px 12px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  /* Gemini glow aura */
+  .text-gemini-gradient {
+    background: linear-gradient(135deg, #1ba2f5 10%, #7647eb 45%, #ff7ea5 70%, #ffc186 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shine-grad 6s ease infinite alternate;
+  }
+
+  .bg-gemini-gradient {
+    background: linear-gradient(135deg, rgba(27, 162, 245, 0.08) 0%, rgba(118, 71, 235, 0.08) 40%, rgba(255, 126, 165, 0.08) 75%, rgba(255, 193, 134, 0.08) 100%);
+  }
+
+  .bg-gemini-glow {
+    background: linear-gradient(135deg, #1ba2f5 0%, #7647eb 35%, #ff7ea5 70%, #ffc186 100%);
+  }
+}
+
+@keyframes shine-grad {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Animations for morphing liquid orbs */
+@keyframes morph1 {
+  0%, 100% { 
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; 
+    transform: translate(0, 0) scale(1); 
+    rotate: 0deg; 
+  }
+  33% { 
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%; 
+    transform: translate(40px, -60px) scale(1.15); 
+    rotate: 120deg; 
+  }
+  66% { 
+    border-radius: 50% 50% 30% 70% / 40% 60% 30% 70%; 
+    transform: translate(-30px, 40px) scale(0.9); 
+    rotate: 240deg; 
+  }
+}
+
+@keyframes morph2 {
+  0%, 100% { 
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%; 
+    transform: translate(0, 0) scale(1); 
+    rotate: 0deg; 
+  }
+  50% { 
+    border-radius: 40% 60% 30% 70% / 50% 30% 70% 50%; 
+    transform: translate(-50px, 30px) scale(1.12); 
+    rotate: 180deg; 
+  }
+}
+
+@keyframes morph3 {
+  0%, 100% { 
+    border-radius: 50% 50% 50% 50%; 
+    transform: translate(0, 0) scale(1); 
+    rotate: 0deg; 
+  }
+  50% { 
+    border-radius: 35% 65% 55% 45% / 45% 55% 35% 65%; 
+    transform: translate(20px, 20px) scale(0.95); 
+    rotate: -90deg; 
+  }
+}
+
+.animate-morph-slow-1 {
+  animation: morph1 18s ease-in-out infinite alternate;
+}
+
+.animate-morph-slow-2 {
+  animation: morph2 24s ease-in-out infinite alternate;
+}
+
+.animate-morph-slow-3 {
+  animation: morph3 20s ease-in-out infinite alternate;
+}
+
+/* Gemini thinking gradient flow keyframes & animations */
+@keyframes gemini-gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gemini-pulse-glow {
+  0%, 100% { opacity: 0.15; transform: scale(1) translate(0, 0); }
+  33% { opacity: 0.25; transform: scale(1.12) translate(15px, -15px); }
+  66% { opacity: 0.22; transform: scale(0.92) translate(-20px, 10px); }
+}
+
+.animate-gemini-flow {
+  background-size: 300% 300%;
+  animation: gemini-gradient-flow 8s ease infinite;
+}
+
+.animate-gemini-pulse-slow {
+  animation: gemini-pulse-glow 7s ease-in-out infinite alternate;
+}
+
+/* Perfect premium custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* Animated Multi-color Aurora Mesh background style */
+@keyframes aurora-mesh {
+  0% {
+    background-position: 0% 50%, 100% 50%, 50% 100%;
+  }
+  50% {
+    background-position: 100% 50%, 0% 50%, 50% 0%;
+  }
+  100% {
+    background-position: 0% 50%, 100% 50%, 50% 100%;
+  }
+}
+
+.thinking-aurora-glow {
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(236, 72, 153, 0.20) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(6, 182, 212, 0.22) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.20) 0%, transparent 45%),
+    radial-gradient(circle at 20% 75%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+    linear-gradient(135deg, #f7f6fd 0%, #f4f3fa 100%);
+  background-size: 200% 200%;
+  animation: aurora-mesh 14s ease-in-out infinite alternate;
+}
+
+/* User speech bubble deep purplish gradient with active outer glow aura */
+.purple-bubble-glow {
+  background: linear-gradient(135deg, #1c002c 0%, #2f0147 45%, #110022 100%);
+  border: 1.5px solid rgba(168, 85, 247, 0.35);
+  box-shadow: 
+    0 1px 1px rgba(255, 255, 255, 0.15) inset,
+    0 0 16px -2px rgba(168, 85, 247, 0.45),
+    0 4px 14px -1px rgba(139, 92, 246, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: "Google Sans", sans-serif;
+}
+
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Markdown prose and table styles */
+.markdown-body {
+  word-break: break-word;
+}
+.markdown-body p {
+  margin-bottom: 0.85em;
+}
+.markdown-body p:last-child {
+  margin-bottom: 0;
+}
+.markdown-body ul, .markdown-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.85em;
+}
+.markdown-body ul {
+  list-style-type: disc;
+}
+.markdown-body ol {
+  list-style-type: decimal;
+}
+.markdown-body li {
+  margin-bottom: 0.35em;
+}
+.markdown-body strong {
+  font-weight: 700;
+  color: #111827;
+}
+.markdown-body em {
+  font-style: italic;
+}
+.markdown-body blockquote {
+  border-left: 4px solid #e9d5ff;
+  padding-left: 1rem;
+  color: #4b5563;
+  font-style: italic;
+  margin-bottom: 0.85em;
+}
+.markdown-body code {
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  font-size: 85%;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+.markdown-body pre {
+  margin-bottom: 1em;
+  padding: 1rem;
+  background-color: #1e1e24;
+  border-radius: 12px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.markdown-body pre code {
+  background-color: transparent;
+  padding: 0;
+  color: #f3f4f6;
+  font-size: 90%;
+}
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: left;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(100, 116, 139, 0.04);
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.markdown-body th {
+  background-color: #f8fafc;
+  font-weight: 700;
+  color: #1e293b;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #e2e8f0;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+.markdown-body td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-weight: 500;
+}
+.markdown-body tr:last-child td {
+  border-bottom: none;
+}
+.markdown-body tr:nth-child(even) {
+  background-color: #fcfdfe;
+}
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 1.25rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+.markdown-body h1 { font-size: 1.4rem; }
+.markdown-body h2 { font-size: 1.25rem; }
+.markdown-body h3 { font-size: 1.1rem; }
+.markdown-body a {
+  color: #6366f1;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.markdown-body a:hover {
+  color: #4f46e5;
+}

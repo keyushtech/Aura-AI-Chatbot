@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Memory Schema Validation
+    function isValidMemory(m) {
+      return m.id is string && m.id.size() <= 128
+        && m.fact is string && m.fact.size() <= 1000
+        && m.category is string && m.category in ['personal', 'preference', 'career', 'interest', 'other']
+        && m.createdAt is string
+        && m.sourceContext is string && m.sourceContext.size() <= 2000
+        && m.isActive is bool
+        && m.userId == request.auth.uid;
+    }
+
+    // ChatSession Schema Validation
+    function isValidChatSession(s) {
+      return s.id is string && s.id.size() <= 128
+        && s.title is string && s.title.size() <= 200
+        && s.createdAt is string
+        && s.userId == request.auth.uid
+        && s.messages is list;
+    }
+
+    // Memories Rules
+    match /memories/{memoryId} {
+      allow get: if isSignedIn() && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() 
+        && isValidId(memoryId)
+        && isValidMemory(incoming())
+        && incoming().id == memoryId;
+      allow update: if isSignedIn()
+        && isValidId(memoryId)
+        && isValidMemory(incoming())
+        && incoming().id == memoryId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // Sessions Rules
+    match /sessions/{sessionId} {
+      allow get: if isSignedIn() && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn()
+        && isValidId(sessionId)
+        && isValidChatSession(incoming())
+        && incoming().id == sessionId;
+      allow update: if isSignedIn()
+        && isValidId(sessionId)
+        && isValidChatSession(incoming())
+        && incoming().id == sessionId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+  }
+}
